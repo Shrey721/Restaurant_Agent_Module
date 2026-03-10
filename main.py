@@ -33,7 +33,7 @@ def main():
         user_input = input("\nYou: ")
 
         if user_input.lower() in ["exit", "quit", "bye"]:
-            print("Goodbye! Have a great day ahead!")
+            print("Goodbye! Have a great day!")
             break
 
         if not user_input.strip():
