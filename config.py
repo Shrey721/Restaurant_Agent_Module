@@ -2,7 +2,7 @@
 # ⚙️ Configuration Settings
 
 # API Settings
-API_KEY = "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"
+API_KEY = "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"
 BASE_URL = "https://openrouter.ai/api/v1"
 MODEL_NAME = "qwen/qwen-2.5-7b-instruct"
 

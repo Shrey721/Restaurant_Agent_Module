@@ -49,17 +49,19 @@ def get_menu(query: str) -> str:
     This includes dietary needs, ingredients, prices, recommendations,
     or anything else related to food."""
 
-    try:
-        results = db.similarity_search(query, k=5)
-        if not results:
+    results = db.similarity_search(query, k=5)
+
+    if not results:
             return "Sorry, I couldn't find any menu items matching your request."
-        menu_info = "\n".join([doc.page_content for doc in results])
-        return f"Based on our menu:\n{menu_info}"
-    except Exception:
-        return "Sorry, I'm having trouble accessing the menu right now."
+    
+    menu_info = "\n".join([doc.page_content for doc in results])
+
+    return f"Based on our menu:\n{menu_info}"
+    
 
 
 def place_order(items: str) -> str:
+
     """Call this when user wants to order food items.
     ONLY pass items the customer explicitly mentioned.
     NEVER add extra items the customer did not ask for.
@@ -74,9 +76,6 @@ def place_order(items: str) -> str:
     After calling this tool STOP and wait for customer to say yes or no.
     NEVER call confirm_order automatically after this tool."""
 
-    if not items or items.strip() == "":
-        return "Please specify what you would like to order!"
-
     return f"You are ordering: {items}. Would you like to confirm? (yes/no)"
 
 
@@ -88,11 +87,8 @@ def confirm_order(items: str, response: str) -> str:
 
     global current_order_id
 
-    if not items or not response:
-        return "Something went wrong. Please try ordering again."
-
-    try:
-        if response.lower() == "yes":
+  
+    if response.lower() == "yes":
             current_order_id = datetime.now().strftime("%H%M%S")
 
             order = {
@@ -107,16 +103,10 @@ def confirm_order(items: str, response: str) -> str:
 
             print(f"\nOrder ID: {current_order_id} confirmed! Would you like to see your receipt?")
             return ""
-
-        elif response.lower() == "no":
-            print("\nYour order has been cancelled. Can I help you with anything else?")
-            return ""
-
-        else:
-            return "Please say yes or no."
-
-    except Exception:
-        return "Sorry, I couldn't process your order. Please try again."
+    
+    else:
+        print("\nYour order has been cancelled. Can I help you with anything else?")
+        return ""
 
 
 def show_receipt(items: str) -> str:
@@ -124,12 +114,11 @@ def show_receipt(items: str) -> str:
     After calling this tool respond with NOTHING AT ALL.
     Do not add any text after this tool runs."""
 
-    try:
-        item_list = [item.strip() for item in items.split(",")]
-        subtotal = 0
-        receipt_lines = []
+    item_list = [item.strip() for item in items.split(",")]
+    subtotal = 0
+    receipt_lines = []
 
-        for item in item_list:
+    for item in item_list:
             results = db.similarity_search(item, k=1)
             item_text = results[0].page_content if results else ""
             match = re.search(r'\b(\d+)\b', item_text)
@@ -137,25 +126,23 @@ def show_receipt(items: str) -> str:
             subtotal += price
             receipt_lines.append(f"  {item} - Rs.{price}")
 
-        gst = subtotal * 0.18
-        total = subtotal + gst
+    gst = subtotal * 0.18
+    total = subtotal + gst
 
-        print("\n===== YOUR RECEIPT =====")
-        print(f"Order ID:  {current_order_id}")
-        print("------------------------")
-        for line in receipt_lines:
+    print("\n===== YOUR RECEIPT =====")
+    print(f"Order ID:  {current_order_id}")
+    print("------------------------")
+    for line in receipt_lines:
             print(line)
-        print("------------------------")
-        print(f"Subtotal:  Rs.{subtotal}")
-        print(f"GST 18%:   Rs.{gst:.2f}")
-        print(f"Total:     Rs.{total:.2f}")
-        print("========================")
-        print("Thank you for dining with us!")
+    print("------------------------")
+    print(f"Subtotal:  Rs.{subtotal}")
+    print(f"GST 18%:   Rs.{gst:.2f}")
+    print(f"Total:     Rs.{total:.2f}")
+    print("========================")
+    print("Thank you for dining with us!")
 
-        return ""
+    return ""
 
-    except Exception:
-        return "Sorry, I couldn't generate your receipt. Please try again."
 
 
 def review_orders():

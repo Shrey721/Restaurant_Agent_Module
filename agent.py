@@ -4,7 +4,7 @@
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import MemorySaver
-from tools import greet_customer, get_user_name, get_menu, place_order, confirm_order, show_receipt, Context
+from tools import show_receipt, place_order, greet_customer, get_user_name, get_menu, confirm_order, Context
 from config import API_KEY, BASE_URL, MODEL_NAME
 
 SYSTEM_PROMPT = """
@@ -40,7 +40,6 @@ def get_model():
         model=MODEL_NAME,
         api_key=API_KEY,
         base_url=BASE_URL,
-        temperature=0
     )
     return model
 
@@ -51,7 +50,7 @@ def setup_agent():
     agent = create_agent(
         model=model,
         system_prompt=SYSTEM_PROMPT,
-        tools=[greet_customer, get_user_name, get_menu, place_order, confirm_order, show_receipt],
+        tools=[show_receipt, place_order, greet_customer, get_user_name, get_menu, confirm_order],
         context_schema=Context,
     )
 

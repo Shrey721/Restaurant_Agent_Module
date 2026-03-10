@@ -21,12 +21,13 @@ def main():
     # setup agent
     agent = setup_agent()
 
-    # conversation history
     conversation_history = []
-    config = {"configurable": {"thread_id": "1"}}
-
-    # greet customer
     print(greet_customer())
+
+    # conversation history
+    config = {"configurable": {"thread_id": "1"}}
+    conversation_history = []
+    MAX_MESSAGES = 6
 
     while True:
         user_input = input("\nYou: ")
@@ -55,7 +56,7 @@ def main():
             conversation_history.append({"role": "assistant", "content": message})
 
             if not message or message.strip() == "":
-                pass  # tool already printed directly
+                print("Waiter: Sorry, could you rephrase that?")
             else:
                 print("\nWaiter:")
                 print_wrapped(message)
@@ -64,8 +65,7 @@ def main():
             print("Waiter: Sorry, something went wrong. Please try again.")
             print(f"DEBUG: {e}")
 
-    # show pending orders for staff review
-    review_orders()
+
 
 
 if __name__ == "__main__":
