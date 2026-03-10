@@ -1,0 +1,11 @@
+langchain
+langchain-community
+langchain-openai
+langchain-huggingface
+langgraph
+faiss-cpu
+sentence-transformers
+unstructured
+unstructured[xlsx]
+openpyxl
+pydantic
