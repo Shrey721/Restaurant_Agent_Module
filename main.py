@@ -7,7 +7,7 @@ from tools import greet_customer, review_orders, Context
 from config import MAX_MESSAGES
 
 
-def print_wrapped(text, width=60):
+def print_wrapped(text, width=60): #warping up text to display chat with agent in proper format in terminal
     print("-" * width)
     for line in text.split('\n'):
         if line.strip():
@@ -33,7 +33,7 @@ def main():
         user_input = input("\nYou: ")
 
         if user_input.lower() in ["exit", "quit", "bye"]:
-            print("Goodbye! Have a great day!")
+            print("Goodbye! Have a great day ahead!")
             break
 
         if not user_input.strip():
