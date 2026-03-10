@@ -1,14 +1,6 @@
 # main.py
 # Run this file to start the bot
 
-import subprocess
-import sys
-
-def install_requirements():
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
-
-install_requirements() 
-
 import textwrap #importing textwrap to format agent responses in terminal
 from agent import setup_agent #function to setup and return the restaurant agent
 from tools import greet_customer, review_orders, Context #importing greet_customer tool and Context schema 
