@@ -5,7 +5,9 @@ langchain-huggingface
 langgraph
 faiss-cpu
 sentence-transformers
-unstructured
-unstructured[xlsx]
+pandas
 openpyxl
 pydantic
+python-dotenv
+fastapi
+uvicorn
